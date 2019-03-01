@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>接口测试</title>
+	<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+
+	<div id="app">
+	
+		<input type="text" name="phone" id="phone"> <button v-if="seen" v-on:click="sendSms">发送短信验证码</button><button v-else >已发送</button>
+	
+	</div>
+
+	<script type="text/javascript" src="/static/js/vue.js"></script>
+
+    <script type="text/javascript">
+
+    	var app = new Vue({
+    		el: "#app",
+
+    		data: {
+    			message: 'hello vue!!',
+    			seen: true,
+    			tags: 1,
+    			lists: [{name:'xiaoliu'},{name:'xiaowang'}],
+
+    			msg: ""
+    		},
+    		created: function(){
+    			//alert('生命周期函数');
+    		},
+    		methods: {
+    			change_button: function(num){
+    				this.tags = num;
+    			},
+    			sendSms:function(){
+    				var phone = $("#phone").val();
+    				if(phone == ''){
+    					alert('手机号不能为空');
+    					return false;
+    				}
+
+    				var that =this;
+
+    				$.ajax({
+    					url:'/api/api/testSms',
+    					type:'post',
+    					data:{phone:phone},
+    					dataType:'json',
+    					success: function(res){
+    						alert('sdsd');
+    						that.seen = false;
+    					}
+    				})
+    			}
+    		}
+
+    	});
+    </script>
+</body>
+</html>
